@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/vs.css' %}">
+
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <br>
+    <div class="card">
+      <h5 class="card-header">{{object.name}} <a href="{% url 'user_snippets' object.user %}"  class="float-right"><small>{{object.user}}</small></a></h5>
+      <div class="card-body">
+        <a href="#"><h5 class="card-title">{{object.language}}</h5></a> 
+        <h6 class="card-subtitle mb-2 text-muted">Creado: {{object.created}}</h6>
+        <p class="card-text">{{object.description}}</p>
+        <div style="background-color:lightgray;border-radius: 5px;">
+          <!-- Código del Snippet -->
+          {% load pygmentify %}
+          {% pygment %}   
+          <pre lang="python"></pre>
+          {{object.snippet}}
+          </pre>
+          {% endpygment %}
+          <!-- Código del Snippet -->
+        </div>
+        <hr>
+        <br>
+        {% if object.user == request.user %}
+        <a href="{% url 'snippet_edit' object.id %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'snippet_delete'  object.id%}" class="btn btn-danger">Eliminar</a> 
+        {% endif %}
+        <a href="{% url 'index' %}" class="btn btn-primary">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

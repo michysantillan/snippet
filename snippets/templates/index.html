@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-md-center" style="padding-top:20px;">
+    <div class="col-md-8">
+        <h1>Snippets</h1>
+        <br>
+        <!-- SNIPPET -->
+        {% for p in object_list %}
+        <div class="card">
+            <h5 class="card-header">{{p.name}} <a href="{% url 'user_snippets' p.user %}"  class="float-right"><small>{{p.user}}</small></a></h5>
+            <div class="card-body">
+                <a href="#" ><h5 class="card-title">{{p.language}}</h5></a> 
+                <h6 class="card-subtitle mb-2 text-muted">Creado: {{p.created}}</h6>
+                <p class="card-text">{{p.description}}</p>
+                <hr>
+                
+                <a href="{% url 'snippet' p.id %}" class="btn btn-primary">Ver</a>
+                {% if p.user == request.user %}
+                <a href="{% url 'snippet_edit' p.id %}" class="btn btn-info">Editar</a>
+                <a href="{% url 'snippet_delete'  p.id%}" class="btn btn-danger">Eliminar</a> 
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        <!-- FIN SNIPPET -->
+
+
+  </div>
+</div>
+{% endblock %}
+
